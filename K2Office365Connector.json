@@ -1,0 +1,1491 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Office365Connector"
+  },
+  "host": "http://summer-paper-7190.getsandbox.com/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/Mail": {
+      "get": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Get Emails",
+        "description": "Gets a message collection from a mailbox folder.",
+        "operationId": "GetMails",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "description": "Specify the number of emails to be fetched by this action. Example: If Top is '10', the top 10 emails are fetched. The default value is 10.",
+            "required": false,
+            "x-ms-summary": "Top",
+            "x-ms-visibility": "advanced",
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Specify the number of emails to be skipped by this action. Example: If skip is '10' and there are 30 emails in total, the emails from 10-20 are fetched. The default value is 0.",
+            "required": false,
+            "x-ms-summary": "Skip",
+            "x-ms-visibility": "advanced",
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          {
+            "name": "folder",
+            "in": "query",
+            "description": "Name of the folder that contains the messages",
+            "required": false,
+            "x-ms-summary": "Folder",
+            "type": "string",
+            "default": "Inbox"
+          },
+          {
+            "name": "fetchOnlyUnreadMails",
+            "in": "query",
+            "description": "Option to fetch only unread messages",
+            "required": false,
+            "x-ms-summary": "Fetch Only Unread Emails",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Message"
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Message"
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      },
+      "post": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Send Email",
+        "description": "Sends the message supplied in the request body.",
+        "operationId": "SendMail",
+        "consumes": [
+          "application/json",
+          "text/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "message",
+            "in": "body",
+            "description": "The message to send",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BaseMessage"
+            },
+            "x-ms-summary": "The message to send"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Delete Mail",
+        "description": "Delete a message.",
+        "operationId": "DeleteMail",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "query",
+            "description": "The ID of the message to delete",
+            "required": true,
+            "x-ms-summary": "Message ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/Mail/MarkAsRead": {
+      "post": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Mark Email Read",
+        "description": "Marks the message as read for the given message id.",
+        "operationId": "MarkAsRead",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "query",
+            "description": "Message id of the message that needs to be marked as read",
+            "required": true,
+            "x-ms-summary": "Message ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/Mail/ReplyTo": {
+      "post": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Reply To",
+        "description": "Replies to sender and/or recipients of the message.",
+        "operationId": "ReplyTo",
+        "consumes": [
+          "application/json",
+          "text/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "query",
+            "description": "The ID of the message to reply to",
+            "required": true,
+            "x-ms-summary": "Message ID",
+            "type": "string"
+          },
+          {
+            "name": "comment",
+            "in": "body",
+            "description": "A comment to include. Can be an empty string",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CommentRoot"
+            },
+            "x-ms-summary": "Comment"
+          },
+          {
+            "name": "replyAll",
+            "in": "query",
+            "description": "Option to just reply to sender or reply to all recipients",
+            "required": false,
+            "x-ms-summary": "Reply All",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/Mail/Poll": {
+      "get": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "New Email",
+        "description": "Checks for any unread message in the specified folder and returns it.",
+        "operationId": "TriggerOnFolder",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "triggerState",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "x-ms-summary": "",
+            "x-ms-visibility": "internal",
+            "x-ms-scheduler-recommendation": "@coalesce(triggers()?.outputs?.body?['triggerState'], '')",
+            "type": "string"
+          },
+          {
+            "name": "folder",
+            "in": "query",
+            "description": "Specify the folder name to trigger the workflow only when mail is received in the specified folder.",
+            "required": false,
+            "x-ms-summary": "Folder",
+            "type": "string",
+            "default": "Inbox"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Specify the 'To' email id to trigger the workflow only when the mail is sent to the specified email id.",
+            "required": false,
+            "x-ms-summary": "To",
+            "x-ms-visibility": "advanced",
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Specify the 'From' email id to trigger the workflow only when the mail is received from the specified email id.",
+            "required": false,
+            "x-ms-summary": "From",
+            "x-ms-visibility": "advanced",
+            "type": "string"
+          },
+          {
+            "name": "importance",
+            "in": "query",
+            "description": "Importance of the received email (“High\", \"Normal\", “Low”).",
+            "required": false,
+            "x-ms-summary": "Importance",
+            "x-ms-visibility": "advanced",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "202": {
+            "description": "Operation was accepted",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-summary": "New Email",
+        "x-ms-scheduler-trigger": "poll"
+      }
+    },
+    "/Calendar": {
+      "get": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Get Events",
+        "description": "Gets a calendar event collection.",
+        "operationId": "GetEvents",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "description": "Specify the number of events to be fetched by this action. Example: If Top is '10', the top 10 events are fetched.",
+            "required": false,
+            "x-ms-summary": "Top",
+            "x-ms-visibility": "advanced",
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Specify the number of events to be skipped by this action. Example: If skip is '10' and there are 30 events in total, the evens from 10-20 are fetched.",
+            "required": false,
+            "x-ms-summary": "From",
+            "x-ms-visibility": "advanced",
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          {
+            "name": "minutesBefore",
+            "in": "query",
+            "description": "Before time in minutes to consider while filtering the calendar events",
+            "required": false,
+            "x-ms-summary": "Minutes Before",
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          {
+            "name": "minutesAfter",
+            "in": "query",
+            "description": "After time in minutes to consider while filtering the calendar events",
+            "required": false,
+            "x-ms-summary": "Minutes After",
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      },
+      "put": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Update Event",
+        "description": "Updates the calendar event supplied in the request body.",
+        "operationId": "UpdateEvent",
+        "consumes": [
+          "application/json",
+          "text/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "query",
+            "description": "The ID of the message to update",
+            "required": true,
+            "x-ms-summary": "Event ID",
+            "type": "string"
+          },
+          {
+            "name": "eventToUpdate",
+            "in": "body",
+            "description": "Calendar Event",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateEvent"
+            },
+            "x-ms-summary": "Calendar Event"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      },
+      "post": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Send Event",
+        "description": "Sends the calendar event supplied in the request body.",
+        "operationId": "SendEvent",
+        "consumes": [
+          "application/json",
+          "text/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "baseEvent",
+            "in": "body",
+            "description": "Calendar Event",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BaseEvent"
+            },
+            "x-ms-summary": "Calendar Event"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "$ref": "#/definitions/IdResponse"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "$ref": "#/definitions/IdResponse"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Delete Event",
+        "description": "Delete a calendar event.",
+        "operationId": "DeleteEvent",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "query",
+            "description": "Specify the unique id of the event.",
+            "required": true,
+            "x-ms-summary": "Event ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/Contacts": {
+      "get": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Get Contacts",
+        "description": "Gets contacts based on the specified parameters.",
+        "operationId": "GetContacts",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "description": "Specify the number of events to be fetched by this action. Example: If Top is '10', the top 10 events are fetched.",
+            "required": false,
+            "x-ms-summary": "Top",
+            "x-ms-visibility": "advanced",
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Specify the number of events to be skipped by this action. Example: If skip is '10' and there are 30 events in total, the evens from 10-20 are fetched.",
+            "required": false,
+            "x-ms-summary": "Skip",
+            "x-ms-visibility": "advanced",
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          {
+            "name": "surname",
+            "in": "query",
+            "description": "Specify the last name of the person to filter.",
+            "required": false,
+            "x-ms-summary": "Surname",
+            "type": "string"
+          },
+          {
+            "name": "givenName",
+            "in": "query",
+            "description": "Specify the first name of the person to filter.",
+            "required": false,
+            "x-ms-summary": "Given Name",
+            "type": "string"
+          },
+          {
+            "name": "companyName",
+            "in": "query",
+            "description": "Specify the company name to filter.",
+            "required": false,
+            "x-ms-summary": "Company Name",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Contact"
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Contact"
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      },
+      "put": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Update Contact",
+        "description": "Updates the contact supplied in the request body.",
+        "operationId": "UpdateContact",
+        "consumes": [
+          "application/json",
+          "text/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "query",
+            "description": "The ID of the contact to update",
+            "required": true,
+            "x-ms-summary": "Contact ID",
+            "type": "string"
+          },
+          {
+            "name": "contactToUpdate",
+            "in": "body",
+            "description": "Contact",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BaseContact"
+            },
+            "x-ms-summary": "Contact"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      },
+      "post": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Add Contact",
+        "description": "Adds the contact supplied in the request body.",
+        "operationId": "AddContact",
+        "consumes": [
+          "application/json",
+          "text/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "contact",
+            "in": "body",
+            "description": "Contact",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BaseContact"
+            },
+            "x-ms-summary": "Contact"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "$ref": "#/definitions/IdResponse"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "$ref": "#/definitions/IdResponse"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Office365Connector"
+        ],
+        "summary": "Delete Contact",
+        "description": "Delete a contact.",
+        "operationId": "DeleteContact",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "query",
+            "description": "The ID of the contact to delete",
+            "required": true,
+            "x-ms-summary": "Contact ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "BadRequest"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "default": {
+            "description": "Operation was successful",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "deprecated": false,
+        "x-ms-visibility": "advanced"
+      }
+    }
+  },
+  "definitions": {
+    "Message": {
+      "description": "",
+      "required": [
+        "To"
+      ],
+      "type": "object",
+      "properties": {
+        "From": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "From"
+        },
+        "Id": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Message ID"
+        },
+        "IsRead": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Is Read",
+          "x-ms-visibility": "advanced"
+        },
+        "DateTimeReceived": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Received Time",
+          "x-ms-visibility": "internal"
+        },
+        "To": {
+          "type": "string",
+          "x-ms-summary": "To"
+        },
+        "CC": {
+          "type": "string",
+          "x-ms-summary": "CC",
+          "x-ms-visibility": "advanced"
+        },
+        "Bcc": {
+          "type": "string",
+          "x-ms-summary": "BCC",
+          "x-ms-visibility": "advanced"
+        },
+        "Subject": {
+          "type": "string",
+          "x-ms-summary": "Subject"
+        },
+        "Importance": {
+          "enum": [
+            "Low",
+            "Normal",
+            "High"
+          ],
+          "type": "string",
+          "x-ms-summary": "Importance",
+          "x-ms-visibility": "advanced"
+        },
+        "Body": {
+          "type": "string",
+          "x-ms-summary": "Body"
+        },
+        "IsHtml": {
+          "type": "boolean",
+          "x-ms-summary": "Is HTML",
+          "x-ms-visibility": "advanced"
+        },
+        "Attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "Attachment"
+          },
+          "readOnly": true,
+          "x-ms-summary": "Attachments",
+          "x-ms-visibility": "advanced"
+        }
+      }
+    },
+    "Attachment": {
+      "description": "",
+      "required": [
+        "Name"
+      ],
+      "type": "object",
+      "properties": {
+        "Name": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": ""
+        },
+        "Content": {
+          "$ref": "Content",
+          "description": "",
+          "x-ms-summary": ""
+        }
+      }
+    },
+    "Content": {
+      "required": [
+        "ContentData",
+        "ContentType",
+        "ContentTransferEncoding"
+      ],
+      "type": "object",
+      "properties": {
+        "ContentData": {
+          "type": "string",
+          "x-ms-summary": "Content Data"
+        },
+        "ContentType": {
+          "type": "string",
+          "x-ms-summary": "Content Type"
+        },
+        "ContentTransferEncoding": {
+          "type": "string",
+          "x-ms-summary": "Content Transfer Encoding"
+        }
+      }
+    },
+    "BaseMessage": {
+      "description": "",
+      "required": [
+        "To"
+      ],
+      "type": "object",
+      "properties": {
+        "To": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "To"
+        },
+        "CC": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "CC",
+          "x-ms-visibility": "advanced"
+        },
+        "Bcc": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "BCC",
+          "x-ms-visibility": "advanced"
+        },
+        "Subject": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Subject"
+        },
+        "Importance": {
+          "description": "",
+          "enum": [
+            "Low",
+            "Normal",
+            "High"
+          ],
+          "type": "string",
+          "x-ms-summary": "Importance",
+          "x-ms-visibility": "advanced"
+        },
+        "Body": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Body"
+        },
+        "IsHtml": {
+          "description": "",
+          "type": "boolean",
+          "x-ms-summary": "Is HTML",
+          "x-ms-visibility": "advanced"
+        },
+        "Attachments": {
+          "description": "",
+          "type": "array",
+          "items": {
+            "$ref": "Attachment"
+          },
+          "readOnly": true,
+          "x-ms-summary": "Attachments",
+          "x-ms-visibility": "advanced"
+        }
+      }
+    },
+    "CommentRoot": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "Comment": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Comment"
+        }
+      }
+    },
+    "BaseEvent": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "Attachments": {
+          "description": "",
+          "type": "array",
+          "items": {
+            "$ref": "Attachment"
+          },
+          "x-ms-summary": "Attachments",
+          "x-ms-visibility": "advanced"
+        },
+        "Attendees": {
+          "type": "string",
+          "x-ms-summary": "Attendees"
+        },
+        "Subject": {
+          "type": "string",
+          "x-ms-summary": "Subject"
+        },
+        "Location": {
+          "type": "string",
+          "x-ms-summary": "Locations"
+        },
+        "Start": {
+          "type": "string",
+          "x-ms-summary": "Start"
+        },
+        "End": {
+          "type": "string",
+          "x-ms-summary": "End"
+        },
+        "Importance": {
+          "type": "string",
+          "x-ms-summary": "Importance",
+          "x-ms-visibility": "advanced"
+        },
+        "Body": {
+          "type": "string",
+          "x-ms-summary": "Body",
+          "x-ms-visibility": "advanced"
+        },
+        "IsHtml": {
+          "type": "string",
+          "x-ms-summary": "Is HTML",
+          "x-ms-visibility": "advanced"
+        }
+      }
+    },
+    "IdResponse": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "Id": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": ""
+        }
+      }
+    },
+    "UpdateEvent": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "Attendees": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Attendees"
+        },
+        "Subject": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Subject"
+        },
+        "Location": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Locations"
+        },
+        "Start": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Start"
+        },
+        "End": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "End"
+        },
+        "Importance": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Importance",
+          "x-ms-visibility": "advanced"
+        },
+        "Body": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Body",
+          "x-ms-visibility": "advanced"
+        },
+        "IsHtml": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Is HTML",
+          "x-ms-visibility": "advanced"
+        }
+      }
+    },
+    "Event": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "Id": {
+          "description": "",
+          "type": "string",
+          "readOnly": true,
+          "x-ms-summary": "Event ID"
+        },
+        "Attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "Attachment"
+          },
+          "x-ms-summary": "Attachments",
+          "x-ms-visibility": "advanced"
+        },
+        "Attendees": {
+          "type": "string",
+          "x-ms-summary": "Attendees"
+        },
+        "Subject": {
+          "type": "string",
+          "x-ms-summary": "Subject"
+        },
+        "Location": {
+          "type": "string",
+          "x-ms-summary": "Locations"
+        },
+        "Start": {
+          "type": "string",
+          "x-ms-summary": "Start"
+        },
+        "End": {
+          "type": "string",
+          "x-ms-summary": "End"
+        },
+        "Importance": {
+          "type": "string",
+          "x-ms-summary": "Importance",
+          "x-ms-visibility": "advanced"
+        },
+        "Body": {
+          "type": "string",
+          "x-ms-summary": "Body",
+          "x-ms-visibility": "advanced"
+        },
+        "IsHtml": {
+          "type": "string",
+          "x-ms-summary": "Is HTML",
+          "x-ms-visibility": "advanced"
+        }
+      }
+    },
+    "BaseContact": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "City": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "City",
+          "x-ms-visibility": "advanced"
+        },
+        "CountryOrRegion": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Country Or Region",
+          "x-ms-visibility": "advanced"
+        },
+        "PostalCode": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Postal Code",
+          "x-ms-visibility": "advanced"
+        },
+        "State": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "State",
+          "x-ms-visibility": "advanced"
+        },
+        "Street": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Street",
+          "x-ms-visibility": "advanced"
+        },
+        "Phone": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Phone"
+        },
+        "CompanyName": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Company Name"
+        },
+        "Department": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Department",
+          "x-ms-visibility": "advanced"
+        },
+        "EmailAddress": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Email Address"
+        },
+        "GivenName": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Given Name"
+        },
+        "JobTitle": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "JobTitle",
+          "x-ms-visibility": "advanced"
+        },
+        "Manager": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Manager",
+          "x-ms-visibility": "advanced"
+        },
+        "MiddleName": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Middle Name"
+        },
+        "Surname": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Surname"
+        },
+        "Title": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": "Title",
+          "x-ms-visibility": "advanced"
+        }
+      }
+    },
+    "Contact": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "Id": {
+          "description": "",
+          "type": "string",
+          "x-ms-summary": ""
+        },
+        "City": {
+          "type": "string",
+          "x-ms-summary": "City",
+          "x-ms-visibility": "advanced"
+        },
+        "CountryOrRegion": {
+          "type": "string",
+          "x-ms-summary": "Country Or Region",
+          "x-ms-visibility": "advanced"
+        },
+        "PostalCode": {
+          "type": "string",
+          "x-ms-summary": "Postal Code",
+          "x-ms-visibility": "advanced"
+        },
+        "State": {
+          "type": "string",
+          "x-ms-summary": "State",
+          "x-ms-visibility": "advanced"
+        },
+        "Street": {
+          "type": "string",
+          "x-ms-summary": "Street",
+          "x-ms-visibility": "advanced"
+        },
+        "Phone": {
+          "type": "string",
+          "x-ms-summary": "Phone"
+        },
+        "CompanyName": {
+          "type": "string",
+          "x-ms-summary": "Company Name"
+        },
+        "Department": {
+          "type": "string",
+          "x-ms-summary": "Department",
+          "x-ms-visibility": "advanced"
+        },
+        "EmailAddress": {
+          "type": "string",
+          "x-ms-summary": "Email Address"
+        },
+        "GivenName": {
+          "type": "string",
+          "x-ms-summary": "Given Name"
+        },
+        "JobTitle": {
+          "type": "string",
+          "x-ms-summary": "JobTitle",
+          "x-ms-visibility": "advanced"
+        },
+        "Manager": {
+          "type": "string",
+          "x-ms-summary": "Manager",
+          "x-ms-visibility": "advanced"
+        },
+        "MiddleName": {
+          "type": "string",
+          "x-ms-summary": "Middle Name"
+        },
+        "Surname": {
+          "type": "string",
+          "x-ms-summary": "Surname"
+        },
+        "Title": {
+          "type": "string",
+          "x-ms-summary": "Title",
+          "x-ms-visibility": "advanced"
+        }
+      }
+    }
+  }
+}
