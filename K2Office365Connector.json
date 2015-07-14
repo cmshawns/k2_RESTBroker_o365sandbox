@@ -4,7 +4,7 @@
     "version": "1.0",
     "title": "Office365Connector"
   },
-  "host": "http://summer-paper-7190.getsandbox.com/",
+  "host": "summer-paper-7190.getsandbox.com",
   "schemes": [
     "http"
   ],
